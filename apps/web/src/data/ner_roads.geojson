@@ -1,0 +1,121 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-27 (Guwahati - Lumding - Silchar)",
+        "classification": "National Highway"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            91.75,
+            26.18
+          ],
+          [
+            92.9,
+            25.75
+          ],
+          [
+            92.8,
+            24.82
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-10 (Siliguri - Gangtok Corridor)",
+        "classification": "Strategic Route"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            88.43,
+            26.72
+          ],
+          [
+            88.58,
+            27.08
+          ],
+          [
+            88.61,
+            27.33
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-6 (Shillong - Silchar Highway)",
+        "classification": "High Risk Corridor"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            91.88,
+            25.57
+          ],
+          [
+            92.2,
+            25.35
+          ],
+          [
+            92.7,
+            25.15
+          ],
+          [
+            92.8,
+            24.82
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-2 (Kohima - Imphal Road)",
+        "classification": "Mountain Highway"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            94.11,
+            25.67
+          ],
+          [
+            93.93,
+            24.81
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-415 (Itanagar Connecting Highway)",
+        "classification": "Hill Route"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            93.62,
+            27.1
+          ],
+          [
+            93.8,
+            27.2
+          ]
+        ]
+      }
+    }
+  ]
+}

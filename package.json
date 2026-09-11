@@ -1,0 +1,14 @@
+{
+  "name": "ner-defender-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --prefix apps/web run dev",
+    "build:web": "npm --prefix apps/web run build",
+    "test:engine": "pytest packages/probability-engine/tests",
+    "start:api": "python3 -m uvicorn packages.api.src.main:app --reload"
+  }
+}

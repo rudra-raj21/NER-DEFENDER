@@ -1,0 +1,133 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cherrapunji (Sohra)",
+        "state": "Meghalaya",
+        "population": 14829,
+        "risk": "Critical"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.7324,
+          25.2702
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mawlynnong",
+        "state": "Meghalaya",
+        "population": 950,
+        "risk": "High"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.9161,
+          25.2014
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Haflong",
+        "state": "Assam",
+        "population": 43756,
+        "risk": "Critical"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          93.0169,
+          25.1667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Singtam",
+        "state": "Sikkim",
+        "population": 5868,
+        "risk": "Critical"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.5,
+          27.15
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chungthang",
+        "state": "Sikkim",
+        "population": 3964,
+        "risk": "Critical"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.6167,
+          27.6
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tawang",
+        "state": "Arunachal Pradesh",
+        "population": 11263,
+        "risk": "High"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.8667,
+          27.5833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lunglei",
+        "state": "Mizoram",
+        "population": 57011,
+        "risk": "High"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.7333,
+          22.8833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mokokchung",
+        "state": "Nagaland",
+        "population": 35913,
+        "risk": "High"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          94.5333,
+          26.3167
+        ]
+      }
+    }
+  ]
+}

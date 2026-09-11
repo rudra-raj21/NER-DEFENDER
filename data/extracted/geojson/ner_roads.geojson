@@ -1,0 +1,9 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "layer": "NER_ROADS",
+    "source": "NESAC / NERDRR GeoServer WMS/WFS",
+    "crs": "EPSG:4326"
+  },
+  "features": []
+}

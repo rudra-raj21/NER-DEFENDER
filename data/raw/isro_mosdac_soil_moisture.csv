@@ -1,0 +1,13 @@
+product_id,location_name,state,latitude,longitude,volumetric_vwc_m3m3,soil_moisture_saturation_pct,satellite_sensor,processing_status
+MOSDAC_SM_ME_EAST,East Khasi Hills (Shillong),Meghalaya,25.57,91.88,0.38,84.44,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_ME_CHER,Cherrapunji (Sohra),Meghalaya,25.27,91.73,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_SI_EAST,East Sikkim (Gangtok),Sikkim,27.33,88.61,0.38,84.44,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_SI_SING,Singtam Corridor,Sikkim,27.15,88.5,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_NA_KOHI,Kohima District,Nagaland,25.67,94.11,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_MI_AIZA,Aizawl District,Mizoram,23.73,92.71,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_AS_DIMA,Dima Hasao (Haflong),Assam,25.16,93.01,0.38,84.44,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_AS_KAMR,Kamrup (m) (Guwahati),Assam,26.17,91.81,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_MA_IMPH,Imphal East Corridor,Manipur,24.81,93.93,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_AR_PAPU,Papum Pare (Itanagar),Arunachal Pradesh,27.1,93.62,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_AR_TAWA,Tawang High Altitude,Arunachal Pradesh,27.58,91.86,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified
+MOSDAC_SM_TR_WEST,West Tripura (Agartala),Tripura,23.83,91.28,0.24,53.33,ISRO SCATSAT-1 / Oceansat-2 MOSDAC,Verified

@@ -1,0 +1,381 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AS",
+        "name": "Assam",
+        "capital": "Dispur",
+        "risk_level": "Medium",
+        "risk_score": 0.52,
+        "center": [
+          26.2006,
+          92.9376
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.7,
+              26.5
+            ],
+            [
+              90.5,
+              27.0
+            ],
+            [
+              92.0,
+              27.0
+            ],
+            [
+              93.5,
+              27.2
+            ],
+            [
+              95.5,
+              27.8
+            ],
+            [
+              96.0,
+              27.3
+            ],
+            [
+              95.0,
+              26.5
+            ],
+            [
+              93.8,
+              25.5
+            ],
+            [
+              92.5,
+              24.8
+            ],
+            [
+              90.0,
+              25.5
+            ],
+            [
+              89.7,
+              26.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AR",
+        "name": "Arunachal Pradesh",
+        "capital": "Itanagar",
+        "risk_level": "High",
+        "risk_score": 0.74,
+        "center": [
+          28.218,
+          94.7278
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.5,
+              27.3
+            ],
+            [
+              92.0,
+              28.0
+            ],
+            [
+              94.0,
+              29.0
+            ],
+            [
+              96.5,
+              28.5
+            ],
+            [
+              97.3,
+              28.0
+            ],
+            [
+              96.2,
+              27.2
+            ],
+            [
+              95.5,
+              27.8
+            ],
+            [
+              93.5,
+              27.2
+            ],
+            [
+              91.5,
+              27.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ML",
+        "name": "Meghalaya",
+        "capital": "Shillong",
+        "risk_level": "Critical",
+        "risk_score": 0.86,
+        "center": [
+          25.467,
+          91.3662
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.8,
+              25.2
+            ],
+            [
+              90.5,
+              25.9
+            ],
+            [
+              92.5,
+              25.8
+            ],
+            [
+              92.8,
+              25.1
+            ],
+            [
+              91.0,
+              25.1
+            ],
+            [
+              89.8,
+              25.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "MN",
+        "name": "Manipur",
+        "capital": "Imphal",
+        "risk_level": "High",
+        "risk_score": 0.68,
+        "center": [
+          24.6637,
+          93.9063
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.0,
+              24.0
+            ],
+            [
+              93.2,
+              25.7
+            ],
+            [
+              94.7,
+              25.7
+            ],
+            [
+              94.5,
+              24.2
+            ],
+            [
+              93.8,
+              23.8
+            ],
+            [
+              93.0,
+              24.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "MZ",
+        "name": "Mizoram",
+        "capital": "Aizawl",
+        "risk_level": "High",
+        "risk_score": 0.71,
+        "center": [
+          23.1645,
+          92.9376
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              92.3,
+              21.9
+            ],
+            [
+              92.2,
+              24.5
+            ],
+            [
+              93.4,
+              24.3
+            ],
+            [
+              93.2,
+              22.2
+            ],
+            [
+              92.3,
+              21.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "NL",
+        "name": "Nagaland",
+        "capital": "Kohima",
+        "risk_level": "Critical",
+        "risk_score": 0.81,
+        "center": [
+          26.1584,
+          94.5624
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.3,
+              25.6
+            ],
+            [
+              94.0,
+              27.0
+            ],
+            [
+              95.2,
+              27.0
+            ],
+            [
+              94.8,
+              25.6
+            ],
+            [
+              93.3,
+              25.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "TR",
+        "name": "Tripura",
+        "capital": "Agartala",
+        "risk_level": "Low",
+        "risk_score": 0.35,
+        "center": [
+          23.9408,
+          91.9882
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.1,
+              23.0
+            ],
+            [
+              91.2,
+              24.5
+            ],
+            [
+              92.3,
+              24.4
+            ],
+            [
+              92.2,
+              23.0
+            ],
+            [
+              91.1,
+              23.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "SK",
+        "name": "Sikkim",
+        "capital": "Gangtok",
+        "risk_level": "Critical",
+        "risk_score": 0.89,
+        "center": [
+          27.533,
+          88.5122
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.0,
+              27.1
+            ],
+            [
+              88.1,
+              28.1
+            ],
+            [
+              88.9,
+              28.1
+            ],
+            [
+              88.8,
+              27.1
+            ],
+            [
+              88.0,
+              27.1
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

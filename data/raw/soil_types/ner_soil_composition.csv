@@ -1,0 +1,13 @@
+polygon_id,location_name,state,latitude,longitude,soil_type,clay_percent,sand_percent,plasticity_index,permeability_index
+SOIL_ME_EAST,East Khasi Hills (Shillong),Meghalaya,25.57,91.88,Silty Clay / High Plasticity,38.0,25.0,26.5,0.35
+SOIL_ME_CHER,Cherrapunji (Sohra),Meghalaya,25.27,91.73,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_SI_EAST,East Sikkim (Gangtok),Sikkim,27.33,88.61,Silty Clay / High Plasticity,38.0,25.0,26.5,0.35
+SOIL_SI_SING,Singtam Corridor,Sikkim,27.15,88.5,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_NA_KOHI,Kohima Ridge,Nagaland,25.67,94.11,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_MI_AIZA,Aizawl Slope,Mizoram,23.73,92.71,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_AS_DIMA,Dima Hasao (Haflong),Assam,25.16,93.01,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_AS_KAMR,Kamrup Metro (Guwahati),Assam,26.17,91.81,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_MA_IMPH,Imphal East Corridor,Manipur,24.81,93.93,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_AR_PAPU,Papum Pare (Itanagar),Arunachal Pradesh,27.1,93.62,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_AR_TAWA,Tawang High Corridor,Arunachal Pradesh,27.58,91.86,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65
+SOIL_TR_WEST,West Tripura (Agartala),Tripura,23.83,91.28,Sandy Loam / Medium Plasticity,28.0,25.0,18.0,0.65

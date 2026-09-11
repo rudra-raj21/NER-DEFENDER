@@ -1,0 +1,9 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "layer": "NER_NH",
+    "source": "NESAC / NERDRR GeoServer WMS/WFS",
+    "crs": "EPSG:4326"
+  },
+  "features": []
+}

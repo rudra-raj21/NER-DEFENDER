@@ -1,0 +1,13 @@
+site_id,location_name,state,latitude,longitude,elevation_meters,slope_degrees
+ELEV_ME_01,East Khasi Hills (Shillong),Meghalaya,25.57,91.88,1520.0,42.8
+ELEV_ME_02,Cherrapunji (Sohra),Meghalaya,25.27,91.73,1305.0,36.4
+ELEV_SI_03,East Sikkim (Gangtok),Sikkim,27.33,88.61,1562.0,50.8
+ELEV_SI_04,Singtam Corridor,Sikkim,27.15,88.5,868.0,33.4
+ELEV_NA_05,Kohima Ridge,Nagaland,25.67,94.11,1449.0,41.5
+ELEV_MI_06,Aizawl Slope,Mizoram,23.73,92.71,890.0,36.3
+ELEV_AS_07,Dima Hasao (Haflong),Assam,25.16,93.01,536.0,17.5
+ELEV_AS_08,Kamrup Metro (Guwahati),Assam,26.17,91.81,131.0,12.0
+ELEV_MA_09,Imphal East Corridor,Manipur,24.81,93.93,783.0,22.0
+ELEV_AR_10,Papum Pare (Itanagar),Arunachal Pradesh,27.1,93.62,349.0,20.8
+ELEV_AR_11,Tawang High Corridor,Arunachal Pradesh,27.58,91.86,2844.0,65.0
+ELEV_TR_12,West Tripura (Agartala),Tripura,23.83,91.28,14.0,15.7

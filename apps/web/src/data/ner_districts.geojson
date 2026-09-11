@@ -1,0 +1,293 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Khasi Hills",
+        "state": "Meghalaya",
+        "risk_score": 0.88,
+        "risk_level": "Critical"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.5,
+              25.2
+            ],
+            [
+              91.5,
+              25.7
+            ],
+            [
+              92.1,
+              25.7
+            ],
+            [
+              92.1,
+              25.2
+            ],
+            [
+              91.5,
+              25.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dima Hasao",
+        "state": "Assam",
+        "risk_score": 0.82,
+        "risk_level": "Critical"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              92.6,
+              24.9
+            ],
+            [
+              92.6,
+              25.5
+            ],
+            [
+              93.3,
+              25.5
+            ],
+            [
+              93.3,
+              24.9
+            ],
+            [
+              92.6,
+              24.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Sikkim",
+        "state": "Sikkim",
+        "risk_score": 0.91,
+        "risk_level": "Critical"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.4,
+              27.1
+            ],
+            [
+              88.4,
+              27.5
+            ],
+            [
+              88.8,
+              27.5
+            ],
+            [
+              88.8,
+              27.1
+            ],
+            [
+              88.4,
+              27.1
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kohima District",
+        "state": "Nagaland",
+        "risk_score": 0.79,
+        "risk_level": "High"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.8,
+              25.5
+            ],
+            [
+              93.8,
+              26.0
+            ],
+            [
+              94.4,
+              26.0
+            ],
+            [
+              94.4,
+              25.5
+            ],
+            [
+              93.8,
+              25.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Papum Pare",
+        "state": "Arunachal Pradesh",
+        "risk_score": 0.73,
+        "risk_level": "High"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.1,
+              26.9
+            ],
+            [
+              93.1,
+              27.5
+            ],
+            [
+              93.8,
+              27.5
+            ],
+            [
+              93.8,
+              26.9
+            ],
+            [
+              93.1,
+              26.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aizawl District",
+        "state": "Mizoram",
+        "risk_score": 0.75,
+        "risk_level": "High"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              92.5,
+              23.5
+            ],
+            [
+              92.5,
+              24.0
+            ],
+            [
+              93.0,
+              24.0
+            ],
+            [
+              93.0,
+              23.5
+            ],
+            [
+              92.5,
+              23.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Imphal East",
+        "state": "Manipur",
+        "risk_score": 0.65,
+        "risk_level": "High"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.8,
+              24.6
+            ],
+            [
+              93.8,
+              25.1
+            ],
+            [
+              94.2,
+              25.1
+            ],
+            [
+              94.2,
+              24.6
+            ],
+            [
+              93.8,
+              24.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Tripura",
+        "state": "Tripura",
+        "risk_score": 0.32,
+        "risk_level": "Low"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.2,
+              23.7
+            ],
+            [
+              91.2,
+              24.1
+            ],
+            [
+              91.6,
+              24.1
+            ],
+            [
+              91.6,
+              23.7
+            ],
+            [
+              91.2,
+              23.7
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
