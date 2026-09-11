@@ -10,13 +10,15 @@ import { VillageMarkers } from './VillageMarkers';
 import { HazardZones } from './HazardZones';
 import { LandslideIncidentsLayer } from './LandslideIncidentsLayer';
 import { MapControls } from './MapControls';
+import { computePythonEngineRisk } from '../../utils/probabilityEngine';
+
+const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
 
 const MapResizer: React.FC = () => {
   const map = useMap();
   const { isSidebarOpen } = useUIStore();
 
   useEffect(() => {
-    // Invalidate map viewport size immediately & after transition timeouts
     const resizeMap = () => {
       map.invalidateSize();
     };
@@ -52,16 +54,25 @@ const MapClickHandler = () => {
         latLng: [lat, lng]
       });
 
-      setLoading(true);
+      // 1. Compute instant calculation with identical Python Risk Engine math
+      const instantRisk = computePythonEngineRisk(lat, lng);
+      setRiskData(instantRisk);
 
+      // 2. Query live API if reachable
+      setLoading(true);
       try {
-        const res = await fetch(`http://localhost:8000/api/risk/area/${lat}/${lng}`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1200);
+
+        const res = await fetch(`${API_BASE}/api/risk/area/${lat}/${lng}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
         if (res.ok) {
           const data = await res.json();
           setRiskData(data);
         }
-      } catch (err) {
-        console.error('Failed to compute risk score:', err);
+      } catch {
+        // Backend optional/unreachable; client calculation remains
       } finally {
         setLoading(false);
       }
@@ -82,7 +93,6 @@ export const MapContainer: React.FC = () => {
         scrollWheelZoom={true}
         className="w-full h-full"
       >
-        {/* OpenStreetMap Base Tiles - 100% Free - Zero API key required */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

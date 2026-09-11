@@ -3,39 +3,65 @@ import { ShieldAlert, AlertTriangle, CheckCircle, Info, RefreshCw } from 'lucide
 import { useTranslation } from 'react-i18next';
 import { useRiskStore } from '../../stores/riskStore';
 import { useMapStore } from '../../stores/mapStore';
+import { computePythonEngineRisk, getDistrictCoords } from '../../utils/probabilityEngine';
+
+const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
 
 export const RiskScorePanel: React.FC = () => {
   const { t } = useTranslation();
   const { currentRisk, isLoading, setRiskData, setLoading } = useRiskStore();
   const { selectedEntity } = useMapStore();
 
-  const fetchLiveRisk = async () => {
+  const updateRiskForEntity = async () => {
     setLoading(true);
+    let lat = 25.57;
+    let lng = 91.88;
+    let areaName = 'East Khasi Hills';
+
+    if (selectedEntity) {
+      areaName = selectedEntity.name;
+      if (selectedEntity.latLng) {
+        [lat, lng] = selectedEntity.latLng;
+      } else {
+        [lat, lng] = getDistrictCoords(selectedEntity.name);
+      }
+    }
+
+    // 1. Instant calculation matching Python Risk Engine 1:1
+    const engineRisk = computePythonEngineRisk(lat, lng, selectedEntity ? selectedEntity.name : 'East Khasi Hills');
+    setRiskData(engineRisk);
+
+    // 2. Query live API if reachable (gives 100% identical score)
     try {
-      let endpoint = 'http://localhost:8000/api/risk/district/East Khasi Hills';
+      let endpoint = `${API_BASE}/api/risk/district/East Khasi Hills`;
       if (selectedEntity) {
         if (selectedEntity.latLng) {
-          const [lat, lng] = selectedEntity.latLng;
-          endpoint = `http://localhost:8000/api/risk/area/${lat}/${lng}`;
+          const [eLat, eLng] = selectedEntity.latLng;
+          endpoint = `${API_BASE}/api/risk/area/${eLat}/${eLng}`;
         } else {
-          endpoint = `http://localhost:8000/api/risk/district/${encodeURIComponent(selectedEntity.name)}`;
+          endpoint = `${API_BASE}/api/risk/district/${encodeURIComponent(selectedEntity.name)}`;
         }
       }
 
-      const res = await fetch(endpoint);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1200);
+
+      const res = await fetch(endpoint, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
       if (res.ok) {
         const data = await res.json();
         setRiskData(data);
       }
-    } catch (err) {
-      console.error('API risk fetch error:', err);
+    } catch {
+      // Backend optional/unreachable; identical client engine data remains
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchLiveRisk();
+    updateRiskForEntity();
   }, [selectedEntity]);
 
   const getBadgeIcon = (level: string) => {
@@ -60,7 +86,7 @@ export const RiskScorePanel: React.FC = () => {
           {t('target_area')}
         </h3>
         <button
-          onClick={fetchLiveRisk}
+          onClick={updateRiskForEntity}
           className="flex items-center space-x-1.5 text-xs text-ner-accent hover:text-sky-300 transition-colors font-mono cursor-pointer"
         >
           <RefreshCw size={12} className={isLoading ? 'animate-spin text-ner-accent' : 'text-emerald-400'} />
