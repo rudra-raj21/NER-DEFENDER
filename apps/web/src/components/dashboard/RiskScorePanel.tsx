@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ShieldAlert, AlertTriangle, CheckCircle, Info, RefreshCw } from 'lucide-react';
+import { ShieldAlert, AlertTriangle, CheckCircle, Info, RefreshCw, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRiskStore } from '../../stores/riskStore';
 import { useMapStore } from '../../stores/mapStore';
@@ -26,7 +26,6 @@ export const RiskScorePanel: React.FC = () => {
     }
 
     try {
-      // 1. Query live API endpoint first if reachable (provides live Open-Meteo metrics)
       let endpoint = `${API_BASE}/api/risk/district/East Khasi Hills`;
       if (selectedEntity) {
         if (selectedEntity.latLng) {
@@ -53,7 +52,6 @@ export const RiskScorePanel: React.FC = () => {
     }
 
     try {
-      // 2. Client-side Live Open-Meteo Engine query
       const engineRisk = await fetchLiveEngineRisk(lat, lng, selectedEntity ? selectedEntity.name : 'East Khasi Hills');
       setRiskData(engineRisk);
     } catch {
@@ -63,7 +61,6 @@ export const RiskScorePanel: React.FC = () => {
     }
   };
 
-  // Ensure loading is unset when API response finishes
   useEffect(() => {
     updateRiskForEntity().finally(() => setLoading(false));
   }, [selectedEntity]);
@@ -76,11 +73,14 @@ export const RiskScorePanel: React.FC = () => {
         return <AlertTriangle size={16} className="text-rose-400" />;
       case 'Medium':
         return <AlertTriangle size={16} className="text-orange-400" />;
+      case 'No Data':
+        return <AlertCircle size={16} className="text-slate-400" />;
       default:
         return <CheckCircle size={16} className="text-emerald-400" />;
     }
   };
 
+  const isNoData = currentRisk.risk_level === ('No Data' as any);
   const scorePercentage = Math.round(currentRisk.risk_score * 100);
 
   return (
@@ -109,14 +109,14 @@ export const RiskScorePanel: React.FC = () => {
           <div className="flex items-center space-x-1.5 mt-1">
             {getBadgeIcon(currentRisk.risk_level)}
             <span className="text-xs font-semibold" style={{ color: currentRisk.color }}>
-              {currentRisk.risk_level} {t('risk_hud')}
+              {isNoData ? 'No Data (Outside NER)' : `${currentRisk.risk_level} ${t('risk_hud')}`}
             </span>
           </div>
         </div>
 
         <div className="text-right">
           <div className="text-2xl font-black tracking-tight transition-all duration-500" style={{ color: currentRisk.color }}>
-            {scorePercentage}%
+            {isNoData ? 'No Data' : `${scorePercentage}%`}
           </div>
           <div className="text-[10px] text-slate-400">Risk Score</div>
         </div>
@@ -133,7 +133,7 @@ export const RiskScorePanel: React.FC = () => {
           <div
             className="h-full rounded-full transition-all duration-700 ease-out"
             style={{
-              width: `${scorePercentage}%`,
+              width: isNoData ? '0%' : `${scorePercentage}%`,
               backgroundColor: currentRisk.color
             }}
           />

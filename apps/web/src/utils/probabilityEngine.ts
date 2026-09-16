@@ -97,6 +97,27 @@ function compute50kmProximityBoost(lat: number, lng: number): [number, number] {
   return [Math.round(minDistKm * 10) / 10, Math.round(multiplier * 100) / 100];
 }
 
+export function isLocationInNER(lat: number, lng: number, name?: string): boolean {
+  if (name) {
+    const clean = name.toLowerCase().trim();
+    if (DISTRICT_COORDS[clean]) return true;
+    for (const key of Object.keys(deforestationData.districts || {})) {
+      if (key.toLowerCase() === clean) return true;
+    }
+    for (const key of Object.keys(deforestationData.states || {})) {
+      if (key.toLowerCase() === clean) return true;
+    }
+  }
+  if (lat < 21.5 || lat > 29.8 || lng < 87.8 || lng > 97.8) {
+    return false;
+  }
+  const [minDistKm] = compute50kmProximityBoost(lat, lng);
+  if (minDistKm > 120.0) {
+    return false;
+  }
+  return true;
+}
+
 function calculateCaineIDRatio(rain24hMm: number): number {
   const intensityActual = rain24hMm / 24.0;
   const iCritical = 14.82 * Math.pow(24.0, -0.39); // ~4.28 mm/hr
@@ -153,6 +174,26 @@ export function computePythonEngineRisk(
   sm0_7?: number,
   sm7_28?: number
 ): RiskData {
+  if (!isLocationInNER(lat, lng, districtName)) {
+    const targetName = districtName || `Location (${lat.toFixed(3)}°N, ${lng.toFixed(3)}°E)`;
+    return {
+      area_name: `${targetName} (Outside NER)`,
+      risk_score: 0.0,
+      risk_level: 'No Data' as any,
+      color: '#64748b',
+      factors: {
+        landslide_history: 0.0,
+        rainfall: 0.0,
+        soil_moisture: 0.0,
+        elevation: 0.0,
+        soil_type: 0.0,
+        deforestation: 0.0
+      },
+      recommendation: 'No Data Available - Target location is outside the North Eastern Region (NER) coverage area.',
+      timestamp: new Date().toISOString()
+    };
+  }
+
   let fHistory = computeTemporalKDEDensity(lat, lng);
 
   if (districtName) {
@@ -262,6 +303,10 @@ export function computePythonEngineRisk(
 }
 
 export async function fetchLiveEngineRisk(lat: number, lng: number, districtName?: string): Promise<RiskData> {
+  if (!isLocationInNER(lat, lng, districtName)) {
+    return computePythonEngineRisk(lat, lng, districtName);
+  }
+
   try {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,relative_humidity_2m,precipitation,rain,soil_moisture_0_to_7cm,soil_moisture_7_to_28cm&hourly=precipitation&past_days=7`;
     const res = await fetch(url);

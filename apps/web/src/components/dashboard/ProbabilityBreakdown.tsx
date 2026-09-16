@@ -7,6 +7,7 @@ export const ProbabilityBreakdown: React.FC = () => {
   const { t } = useTranslation();
   const { currentRisk } = useRiskStore();
   const f = currentRisk.factors;
+  const isNoData = currentRisk.risk_level === ('No Data' as any);
 
   const factorsList = [
     { label: t('landslide_history'), weight: '30%', value: f.landslide_history, color: 'bg-rose-500' },
@@ -42,13 +43,13 @@ export const ProbabilityBreakdown: React.FC = () => {
                 {item.weight ? (
                   <>W: <strong className="text-slate-200">{item.weight}</strong> | </>
                 ) : null}
-                Val: {(item.value * 100).toFixed(0)}%
+                Val: {isNoData ? 'N/A' : `${(item.value * 100).toFixed(0)}%`}
               </span>
             </div>
             <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
               <div
                 className={`h-full ${item.color} transition-all duration-300`}
-                style={{ width: `${Math.round(item.value * 100)}%` }}
+                style={{ width: isNoData ? '0%' : `${Math.round(item.value * 100)}%` }}
               />
             </div>
           </div>

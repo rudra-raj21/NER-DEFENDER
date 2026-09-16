@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Camera, MapPin, Send, X, ShieldAlert, Image as ImageIcon, Trash2, CheckCircle2, Upload } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Camera, MapPin, Send, X, ShieldAlert, Image as ImageIcon, Trash2, CheckCircle2, Upload, Crosshair } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '../../stores/uiStore';
+import { useMapStore } from '../../stores/mapStore';
 
 interface AttachedPhoto {
   dataUrl: string;
@@ -12,6 +13,7 @@ interface AttachedPhoto {
 export const ReportIncidentModal: React.FC = () => {
   const { t } = useTranslation();
   const { isReportModalOpen, setReportModalOpen } = useUIStore();
+  const { selectedEntity } = useMapStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
@@ -23,8 +25,70 @@ export const ReportIncidentModal: React.FC = () => {
   const [photo, setPhoto] = useState<AttachedPhoto | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [detectingGps, setDetectingGps] = useState(false);
+
+  useEffect(() => {
+    if (isReportModalOpen) {
+      let initialLoc = '';
+      if (selectedEntity) {
+        initialLoc = selectedEntity.name;
+        if (selectedEntity.latLng) {
+          initialLoc += ` (${selectedEntity.latLng[0].toFixed(3)}°N, ${selectedEntity.latLng[1].toFixed(3)}°E)`;
+        }
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        location: prev.location || initialLoc || 'East Khasi Hills, Meghalaya'
+      }));
+
+      // Try browser GPS location auto-detection
+      if (navigator.geolocation && !formData.location) {
+        setDetectingGps(true);
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const gpsLoc = `GPS: (${pos.coords.latitude.toFixed(4)}°N, ${pos.coords.longitude.toFixed(4)}°E)`;
+            setFormData((prev) => ({ ...prev, location: gpsLoc }));
+            setDetectingGps(false);
+          },
+          () => {
+            setDetectingGps(false);
+          },
+          { timeout: 5000 }
+        );
+      }
+    }
+  }, [isReportModalOpen, selectedEntity]);
 
   if (!isReportModalOpen) return null;
+
+  const handleAutoDetectGps = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser.');
+      return;
+    }
+    setDetectingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const gpsLoc = `GPS: (${pos.coords.latitude.toFixed(4)}°N, ${pos.coords.longitude.toFixed(4)}°E)`;
+        setFormData({ ...formData, location: gpsLoc });
+        setDetectingGps(false);
+      },
+      (err) => {
+        setDetectingGps(false);
+        if (selectedEntity) {
+          let loc = selectedEntity.name;
+          if (selectedEntity.latLng) {
+            loc += ` (${selectedEntity.latLng[0].toFixed(3)}°N, ${selectedEntity.latLng[1].toFixed(3)}°E)`;
+          }
+          setFormData({ ...formData, location: loc });
+        } else {
+          alert('Could not retrieve GPS location: ' + err.message);
+        }
+      },
+      { timeout: 6000 }
+    );
+  };
 
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -116,7 +180,7 @@ export const ReportIncidentModal: React.FC = () => {
         {submitted ? (
           <div className="py-8 text-center space-y-2">
             <div className="text-emerald-400 font-bold text-lg">Report Submitted Successfully</div>
-            <p className="text-xs text-slate-300">Geo-tagged data & photo evidence dispatched for validation by emergency teams.</p>
+            <p className="text-xs text-slate-300">Geo-tagged data ({formData.location}) & photo evidence dispatched for validation by emergency teams.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
@@ -133,7 +197,17 @@ export const ReportIncidentModal: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">{t('incident_location')}</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-slate-400">{t('incident_location')}</label>
+                <button
+                  type="button"
+                  onClick={handleAutoDetectGps}
+                  className="text-[10px] text-ner-accent hover:text-sky-300 font-mono flex items-center gap-1 cursor-pointer"
+                >
+                  <Crosshair size={11} className={detectingGps ? 'animate-spin' : ''} />
+                  <span>{detectingGps ? 'Locating...' : 'Auto-Detect GPS'}</span>
+                </button>
+              </div>
               <div className="relative">
                 <input
                   type="text"
@@ -143,7 +217,7 @@ export const ReportIncidentModal: React.FC = () => {
                   placeholder="e.g. NH-6 Km 42 near Sonapur Tunnel"
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 pl-8 text-slate-100 focus:outline-none focus:border-ner-accent"
                 />
-                <MapPin size={14} className="absolute left-2.5 top-3 text-slate-400" />
+                <MapPin size={14} className="absolute left-2.5 top-3 text-ner-accent" />
               </div>
             </div>
 

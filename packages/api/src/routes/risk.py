@@ -49,6 +49,23 @@ def query_elevation_slope(lat: float, lng: float) -> float:
     return round(max(8.0, min(65.0, slope)), 1)
 
 
+def is_location_in_ner(lat: float, lng: float, name: str = "") -> bool:
+    """Checks whether target latitude, longitude or name falls strictly within the North Eastern Region of India."""
+    if name:
+        clean = name.lower().strip()
+        if clean in DISTRICT_COORDS:
+            return True
+        d_data = get_deforestation_summary(name)
+        if d_data.get("type") in ["state", "district"]:
+            return True
+    if lat < 21.5 or lat > 29.8 or lng < 87.8 or lng > 97.8:
+        return False
+    min_dist_km, _ = calculator.compute_50km_proximity_boost(lat, lng)
+    if min_dist_km > 120.0:
+        return False
+    return True
+
+
 def fetch_open_meteo_live_metrics(lat: float, lng: float):
     """
     Fetches real-time rainfall and multi-depth soil moisture metrics from live Open-Meteo API (7-day time series).
@@ -76,7 +93,7 @@ def fetch_open_meteo_live_metrics(lat: float, lng: float):
             sat_pct = round(max(0.0, min(100.0, (0.6 * s1 + 0.4 * s2) * 100.0)), 1)
 
             precip_list = hourly.get("precipitation", [])
-            if len(precip_list) >= 168:  # 7 days * 24 hours
+            if len(precip_list) >= 168:
                 past_24h_rain = float(sum(precip_list[-24:]))
                 antecedent_rain = float(sum(precip_list[-168:-24]))
             elif len(precip_list) >= 24:
@@ -93,12 +110,29 @@ def fetch_open_meteo_live_metrics(lat: float, lng: float):
 
             return round(past_24h_rain, 1), round(antecedent_rain, 1), sat_pct, sm_0_7, sm_7_28
     except Exception:
-        # Fallback if network issue occurs
         return 42.5, 95.0, 88.5, 0.395, 0.412
 
 
 @router.get("/area/{lat}/{lng}", response_model=RiskScoreResponse)
 def get_risk_by_coordinates(lat: float, lng: float):
+    if not is_location_in_ner(lat, lng):
+        return RiskScoreResponse(
+            area_name=f"Location ({lat:.3f}°N, {lng:.3f}°E) [Outside NER]",
+            risk_score=0.0,
+            risk_level="No Data",
+            color="#64748b",
+            factors=RiskFactorBreakdown(
+                landslide_history=0.0,
+                rainfall=0.0,
+                soil_moisture=0.0,
+                elevation=0.0,
+                soil_type=0.0,
+                deforestation=0.0
+            ),
+            recommendation="No Data Available - Selected location is outside the North Eastern Region (NER) coverage area.",
+            timestamp=datetime.now(timezone.utc).isoformat()
+        )
+
     rain_24h, antecedent_rain, sat_pct, sm_0_7, sm_7_28 = fetch_open_meteo_live_metrics(lat, lng)
 
     slope_deg = query_elevation_slope(lat, lng)
@@ -140,7 +174,25 @@ def get_risk_by_coordinates(lat: float, lng: float):
 @router.get("/district/{name}", response_model=RiskScoreResponse)
 def get_risk_by_district(name: str):
     clean_name = name.lower().strip()
-    lat, lng = DISTRICT_COORDS.get(clean_name, (25.5, 92.0))
+    lat, lng = DISTRICT_COORDS.get(clean_name, (0.0, 0.0))
+
+    if lat == 0.0 or not is_location_in_ner(lat, lng, name):
+        return RiskScoreResponse(
+            area_name=f"District: {name} [Outside NER]",
+            risk_score=0.0,
+            risk_level="No Data",
+            color="#64748b",
+            factors=RiskFactorBreakdown(
+                landslide_history=0.0,
+                rainfall=0.0,
+                soil_moisture=0.0,
+                elevation=0.0,
+                soil_type=0.0,
+                deforestation=0.0
+            ),
+            recommendation="No Data Available - Selected district is outside the North Eastern Region (NER) coverage area.",
+            timestamp=datetime.now(timezone.utc).isoformat()
+        )
 
     rain_24h, antecedent_rain, sat_pct, sm_0_7, sm_7_28 = fetch_open_meteo_live_metrics(lat, lng)
 
