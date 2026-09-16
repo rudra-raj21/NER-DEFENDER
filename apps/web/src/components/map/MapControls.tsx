@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Eye, EyeOff } from 'lucide-react';
+import { Layers, Eye, EyeOff, Radio } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useMapStore } from '../../stores/mapStore';
 
@@ -8,12 +8,13 @@ export const MapControls: React.FC = () => {
   const { layers, toggleLayer } = useMapStore();
 
   const layerItems = [
-    { key: 'states' as const, label: t('layer_states') },
-    { key: 'districts' as const, label: t('layer_districts') },
-    { key: 'roads' as const, label: t('layer_highways') },
-    { key: 'villages' as const, label: t('layer_settlements') },
-    { key: 'hazardZones' as const, label: t('layer_hazard_zones') },
-    { key: 'incidents' as const, label: t('layer_nesac_events') },
+    { key: 'states' as const, label: t('layer_states'), badge: null },
+    { key: 'districts' as const, label: t('layer_districts'), badge: null },
+    { key: 'roads' as const, label: t('layer_highways'), badge: null },
+    { key: 'villages' as const, label: t('layer_settlements'), badge: null },
+    { key: 'hazardZones' as const, label: t('layer_hazard_zones'), badge: null },
+    { key: 'incidents' as const, label: t('layer_nesac_events'), badge: null },
+    { key: 'ndmaAlerts' as const, label: 'NDMA Live CAP Alerts', badge: 'LIVE' },
   ];
 
   return (
@@ -35,8 +36,18 @@ export const MapControls: React.FC = () => {
                   : 'bg-slate-900/40 border-slate-800 text-slate-400 opacity-60'
               }`}
             >
-              <span>{item.label}</span>
-              {active ? <Eye size={12} className="text-ner-accent" /> : <EyeOff size={12} />}
+              <span className="flex items-center gap-1.5">
+                {item.key === 'ndmaAlerts' && <Radio size={12} className="text-red-500 animate-pulse" />}
+                {item.label}
+              </span>
+              <div className="flex items-center gap-1.5">
+                {item.badge && (
+                  <span className="text-[9px] bg-red-950 text-red-400 border border-red-500/40 px-1 py-0.2 rounded font-mono">
+                    {item.badge}
+                  </span>
+                )}
+                {active ? <Eye size={12} className="text-ner-accent" /> : <EyeOff size={12} />}
+              </div>
             </button>
           );
         })}

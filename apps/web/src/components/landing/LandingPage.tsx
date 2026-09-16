@@ -61,7 +61,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchMap }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden font-sans relative">
+    <div className="min-h-screen h-screen w-full bg-slate-950 text-slate-100 flex flex-col justify-between overflow-y-auto overflow-x-hidden font-sans relative">
       {/* Glow Background Gradient Orbs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl pointer-events-none" />

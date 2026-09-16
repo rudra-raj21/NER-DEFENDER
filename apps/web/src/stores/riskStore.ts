@@ -6,6 +6,7 @@ export interface FactorBreakdown {
   soil_moisture: number;
   elevation: number;
   soil_type: number;
+  deforestation?: number;
 }
 
 export interface RiskData {
@@ -35,7 +36,8 @@ const defaultRisk: RiskData = {
     rainfall: 0.82,
     soil_moisture: 0.65,
     elevation: 0.70,
-    soil_type: 0.60
+    soil_type: 0.60,
+    deforestation: 0.35
   },
   recommendation: "High landslide threat active in steep corridor slopes across East Khasi Hills and Sikkim.",
   timestamp: new Date().toISOString()

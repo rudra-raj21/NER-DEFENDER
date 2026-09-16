@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import risk, alerts, weather, crowdsourcing, sync
+from .routes import risk, alerts, weather, crowdsourcing, sync, deforestation
 
 app = FastAPI(
     title="NER DEFENDER API",
@@ -21,6 +21,7 @@ app.include_router(alerts.router)
 app.include_router(weather.router)
 app.include_router(crowdsourcing.router)
 app.include_router(sync.router)
+app.include_router(deforestation.router)
 
 @app.get("/")
 def root():

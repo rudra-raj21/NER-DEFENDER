@@ -9,8 +9,9 @@ import { RoadLayer } from './RoadLayer';
 import { VillageMarkers } from './VillageMarkers';
 import { HazardZones } from './HazardZones';
 import { LandslideIncidentsLayer } from './LandslideIncidentsLayer';
+import { NDMAAlertsLayer } from './NDMAAlertsLayer';
 import { MapControls } from './MapControls';
-import { computePythonEngineRisk } from '../../utils/probabilityEngine';
+import { fetchLiveEngineRisk, computePythonEngineRisk } from '../../utils/probabilityEngine';
 
 const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
 
@@ -54,15 +55,15 @@ const MapClickHandler = () => {
         latLng: [lat, lng]
       });
 
-      // 1. Compute instant calculation with identical Python Risk Engine math
+      // 1. Instant calculation with identical Python Risk Engine math
       const instantRisk = computePythonEngineRisk(lat, lng);
       setRiskData(instantRisk);
 
-      // 2. Query live API if reachable
+      // 2. Query live real-time API or client Open-Meteo query
       setLoading(true);
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1200);
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
 
         const res = await fetch(`${API_BASE}/api/risk/area/${lat}/${lng}`, { signal: controller.signal });
         clearTimeout(timeoutId);
@@ -70,9 +71,18 @@ const MapClickHandler = () => {
         if (res.ok) {
           const data = await res.json();
           setRiskData(data);
+          setLoading(false);
+          return;
         }
       } catch {
-        // Backend optional/unreachable; client calculation remains
+        // Fallback to client-side live engine query
+      }
+
+      try {
+        const liveRisk = await fetchLiveEngineRisk(lat, lng);
+        setRiskData(liveRisk);
+      } catch {
+        // Ignore
       } finally {
         setLoading(false);
       }
@@ -108,6 +118,7 @@ export const MapContainer: React.FC = () => {
         {layers.villages && <VillageMarkers />}
         {layers.hazardZones && <HazardZones />}
         {layers.incidents && <LandslideIncidentsLayer />}
+        {layers.ndmaAlerts && <NDMAAlertsLayer />}
       </ReactLeafletMap>
       <MapControls />
     </div>

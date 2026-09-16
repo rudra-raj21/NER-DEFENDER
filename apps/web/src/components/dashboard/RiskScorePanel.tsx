@@ -3,7 +3,7 @@ import { ShieldAlert, AlertTriangle, CheckCircle, Info, RefreshCw } from 'lucide
 import { useTranslation } from 'react-i18next';
 import { useRiskStore } from '../../stores/riskStore';
 import { useMapStore } from '../../stores/mapStore';
-import { computePythonEngineRisk, getDistrictCoords } from '../../utils/probabilityEngine';
+import { fetchLiveEngineRisk, getDistrictCoords } from '../../utils/probabilityEngine';
 
 const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
 
@@ -16,10 +16,8 @@ export const RiskScorePanel: React.FC = () => {
     setLoading(true);
     let lat = 25.57;
     let lng = 91.88;
-    let areaName = 'East Khasi Hills';
 
     if (selectedEntity) {
-      areaName = selectedEntity.name;
       if (selectedEntity.latLng) {
         [lat, lng] = selectedEntity.latLng;
       } else {
@@ -27,12 +25,8 @@ export const RiskScorePanel: React.FC = () => {
       }
     }
 
-    // 1. Instant calculation matching Python Risk Engine 1:1
-    const engineRisk = computePythonEngineRisk(lat, lng, selectedEntity ? selectedEntity.name : 'East Khasi Hills');
-    setRiskData(engineRisk);
-
-    // 2. Query live API if reachable (gives 100% identical score)
     try {
+      // 1. Query live API endpoint first if reachable (provides live Open-Meteo metrics)
       let endpoint = `${API_BASE}/api/risk/district/East Khasi Hills`;
       if (selectedEntity) {
         if (selectedEntity.latLng) {
@@ -44,7 +38,7 @@ export const RiskScorePanel: React.FC = () => {
       }
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1200);
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
 
       const res = await fetch(endpoint, { signal: controller.signal });
       clearTimeout(timeoutId);
@@ -52,16 +46,26 @@ export const RiskScorePanel: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         setRiskData(data);
+        return;
       }
     } catch {
-      // Backend optional/unreachable; identical client engine data remains
+      // Fallback to client-side live Open-Meteo query
+    }
+
+    try {
+      // 2. Client-side Live Open-Meteo Engine query
+      const engineRisk = await fetchLiveEngineRisk(lat, lng, selectedEntity ? selectedEntity.name : 'East Khasi Hills');
+      setRiskData(engineRisk);
+    } catch {
+      // Ignore
     } finally {
       setLoading(false);
     }
   };
 
+  // Ensure loading is unset when API response finishes
   useEffect(() => {
-    updateRiskForEntity();
+    updateRiskForEntity().finally(() => setLoading(false));
   }, [selectedEntity]);
 
   const getBadgeIcon = (level: string) => {
@@ -86,18 +90,18 @@ export const RiskScorePanel: React.FC = () => {
           {t('target_area')}
         </h3>
         <button
-          onClick={updateRiskForEntity}
+          onClick={() => updateRiskForEntity().finally(() => setLoading(false))}
           className="flex items-center space-x-1.5 text-xs text-ner-accent hover:text-sky-300 transition-colors font-mono cursor-pointer"
         >
           <RefreshCw size={12} className={isLoading ? 'animate-spin text-ner-accent' : 'text-emerald-400'} />
-          <span>{isLoading ? 'Computing ML...' : 'Live Model'}</span>
+          <span>{isLoading ? 'Fetching Live Data...' : 'Live Real-Time Model'}</span>
         </button>
       </div>
 
       <div className="bg-slate-900/70 border border-slate-700/50 rounded-xl p-3.5 flex items-center justify-between relative overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center text-xs text-ner-accent font-mono font-bold animate-pulse">
-            Computing Spatial KDE & NetCDF...
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center text-xs text-ner-accent font-mono font-bold animate-pulse z-10">
+            Querying Live Open-Meteo & Hydrostatic Saturation...
           </div>
         )}
         <div>

@@ -7,6 +7,7 @@ class RiskFactorBreakdown(BaseModel):
     soil_moisture: float
     elevation: float
     soil_type: float
+    deforestation: float = 0.0
 
 class RiskScoreResponse(BaseModel):
     area_name: str
@@ -51,3 +52,6 @@ class WeatherDataResponse(BaseModel):
     rainfall_72h_mm: float
     wind_speed_kmh: float
     condition: str
+    soil_moisture_0_to_7cm: float = 0.35
+    soil_moisture_7_to_28cm: float = 0.38
+    hydrostatic_saturation_pct: float = 80.0

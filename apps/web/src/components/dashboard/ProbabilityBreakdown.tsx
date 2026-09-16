@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, TreeDeciduous } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRiskStore } from '../../stores/riskStore';
 
@@ -14,6 +14,13 @@ export const ProbabilityBreakdown: React.FC = () => {
     { label: t('soil_moisture_sat'), weight: '15%', value: f.soil_moisture, color: 'bg-emerald-500' },
     { label: t('terrain_slope'), weight: '15%', value: f.elevation, color: 'bg-amber-500' },
     { label: t('geological_structure'), weight: '15%', value: f.soil_type, color: 'bg-purple-500' },
+    {
+      label: 'Deforestation & Tree Loss (GFW)',
+      weight: null,
+      value: f.deforestation ?? 0.35,
+      color: 'bg-teal-500',
+      isDeforestation: true
+    },
   ];
 
   return (
@@ -27,9 +34,15 @@ export const ProbabilityBreakdown: React.FC = () => {
         {factorsList.map((item) => (
           <div key={item.label} className="bg-slate-900/60 border border-slate-800 rounded-lg p-2">
             <div className="flex justify-between items-center mb-1 text-slate-300">
-              <span className="font-medium">{item.label}</span>
+              <span className="font-medium flex items-center gap-1">
+                {item.isDeforestation && <TreeDeciduous size={12} className="text-teal-400" />}
+                {item.label}
+              </span>
               <span className="text-[10px] text-slate-400">
-                W: <strong className="text-slate-200">{item.weight}</strong> | Val: {(item.value * 100).toFixed(0)}%
+                {item.weight ? (
+                  <>W: <strong className="text-slate-200">{item.weight}</strong> | </>
+                ) : null}
+                Val: {(item.value * 100).toFixed(0)}%
               </span>
             </div>
             <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">

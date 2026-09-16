@@ -25,6 +25,7 @@ interface MapState {
     villages: boolean;
     hazardZones: boolean;
     incidents: boolean;
+    ndmaAlerts: boolean;
   };
   setCenterZoom: (center: [number, number], zoom: number) => void;
   setSelectedEntity: (entity: SelectedEntity | null) => void;
@@ -42,6 +43,7 @@ export const useMapStore = create<MapState>((set) => ({
     villages: true,
     hazardZones: true,
     incidents: true,
+    ndmaAlerts: true,
   },
   setCenterZoom: (center, zoom) => set({ center, zoom }),
   setSelectedEntity: (entity) => set({ selectedEntity: entity }),
